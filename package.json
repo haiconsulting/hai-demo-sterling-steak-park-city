@@ -1,0 +1,48 @@
+{
+  "name": "sterling-steak-demo",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 4317",
+    "build": "next build",
+    "build:pages": "NEXT_PUBLIC_BASE_PATH=/hai-demo-sterling-steak-park-city next build",
+    "serve:pages": "NEXT_PUBLIC_BASE_PATH=/hai-demo-sterling-steak-park-city node scripts/serve-pages.mjs 4318",
+    "serve": "node scripts/serve-pages.mjs 4318",
+    "images": "node scripts/optimize-images.mjs",
+    "screenshots": "node scripts/screenshots.mjs",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "test": "next build && vitest run",
+    "test:unit": "vitest run tests/jsonld.test.ts",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "@base-ui/react": "^1.9.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.54.0",
+    "next": "16.4.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "shadcn": "^4.21.4",
+    "tailwind-merge": "^3.7.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.0",
+    "@tailwindcss/turbopack": "^4",
+    "@types/node": "^22.20.5",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.0",
+    "playwright-core": "^1.64.0",
+    "schema-dts": "^2.1.0",
+    "sharp": "^0.35.5",
+    "tailwindcss": "^4",
+    "typescript": "^5",
+    "vitest": "^5.0.3"
+  },
+  "engines": {
+    "node": ">=20.9"
+  }
+}

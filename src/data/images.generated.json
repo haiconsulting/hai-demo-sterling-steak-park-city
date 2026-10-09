@@ -1,0 +1,140 @@
+{
+  "hero": {
+    "width": 1920,
+    "height": 1080,
+    "widths": [
+      640,
+      960,
+      1440,
+      1920
+    ],
+    "alpha": false
+  },
+  "ribeye": {
+    "width": 1200,
+    "height": 800,
+    "widths": [
+      480,
+      800,
+      1200
+    ],
+    "alpha": false
+  },
+  "dining": {
+    "width": 726,
+    "height": 536,
+    "widths": [
+      480,
+      726
+    ],
+    "alpha": true
+  },
+  "toast": {
+    "width": 726,
+    "height": 536,
+    "widths": [
+      480,
+      726
+    ],
+    "alpha": true
+  },
+  "prime-rib": {
+    "width": 833,
+    "height": 640,
+    "widths": [
+      480,
+      833
+    ],
+    "alpha": true
+  },
+  "plates": {
+    "width": 748,
+    "height": 684,
+    "widths": [
+      480,
+      748
+    ],
+    "alpha": true
+  },
+  "house-band": {
+    "width": 800,
+    "height": 800,
+    "widths": [
+      400,
+      800
+    ],
+    "alpha": false
+  },
+  "calamari": {
+    "width": 800,
+    "height": 800,
+    "widths": [
+      400,
+      800
+    ],
+    "alpha": false
+  },
+  "cocktail": {
+    "width": 800,
+    "height": 800,
+    "widths": [
+      400,
+      800
+    ],
+    "alpha": false
+  },
+  "baked-potato": {
+    "width": 800,
+    "height": 800,
+    "widths": [
+      400,
+      800
+    ],
+    "alpha": false
+  },
+  "tuna": {
+    "width": 800,
+    "height": 800,
+    "widths": [
+      400,
+      800
+    ],
+    "alpha": false
+  },
+  "bartender": {
+    "width": 800,
+    "height": 800,
+    "widths": [
+      400,
+      800
+    ],
+    "alpha": false
+  },
+  "lounge": {
+    "width": 800,
+    "height": 800,
+    "widths": [
+      400,
+      800
+    ],
+    "alpha": false
+  },
+  "oysters": {
+    "width": 800,
+    "height": 800,
+    "widths": [
+      400,
+      800
+    ],
+    "alpha": false
+  },
+  "logo": {
+    "width": 293,
+    "height": 281,
+    "widths": [
+      146,
+      293
+    ],
+    "alpha": true
+  }
+}
