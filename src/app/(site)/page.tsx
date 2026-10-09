@@ -41,15 +41,15 @@ export default function Home() {
               <br />
               Seven nights.
             </h1>
-            <TonightCard className="mt-7 lg:hidden" />
+            <div data-hero-ctas className="mt-8 flex flex-wrap gap-3">
+              <ReserveButton size="lg" />
+              <OrderButton size="lg" />
+            </div>
+            <TonightCard className="mt-8 lg:hidden" />
             <p className="mt-6 max-w-lg text-base leading-relaxed text-st-cream/80 sm:text-lg">
               Jackson and Lance Sterling&apos;s steakhouse and lounge. Live music every night of the week, a house band raised on
               &apos;70s and &apos;80s rock, and a copper bar under walls of collectible guitars.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <ReserveButton size="lg" />
-              <OrderButton size="lg" />
-            </div>
             <Link href="/music/" className="mt-6 inline-flex items-center gap-2 text-sm text-st-gold-light underline-offset-4 hover:underline">
               See who&apos;s playing this week <ArrowRight className="size-4" aria-hidden />
             </Link>

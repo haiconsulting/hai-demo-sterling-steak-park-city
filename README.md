@@ -85,6 +85,9 @@ npm run lint && npm run typecheck
 - `tests/site-url.test.ts`: URL precedence (`NEXT_PUBLIC_SITE_URL`, then Vercel production URL, then Pages origin) and localhost rejection.
 - `tests/e2e/mobile-layout.spec.ts` (Playwright): every page at 320, 360, 375, 390, 414 and 430px has no horizontal scroll and no clipped fixed bars; `/pitch` comparison rows render as stacked cards at least 90% of the viewport wide below 768px, and as a table from 768px up. It uses an installed Chrome (`CHROME_PATH`, or the usual install paths); otherwise run `npx playwright install chromium` once.
 
+- `tests/e2e/demo-ribbon.spec.ts` (Playwright): the demo pill is about 1.4x its original size (17.4px text, 16px at 320px), the pitch and dismiss buttons are at least 48x48px, the pill fits at 320 to 430px, sits above the mobile Reserve/Order/Call bar, never covers the hero Reserve and Order buttons at 667 to 932px tall, and never hides the footer's last row. The pitch button's nudge runs every 4s, pauses on hover and focus, and is off under `prefers-reduced-motion`.
+- `tests/ribbon-css.test.ts`: the `foh-nudge` keyframes (scale 1.12, wobble 3 to 4deg, motion in the last 600ms of a 4s cycle) and the reduced-motion override exist in `globals.css`.
+
 Run with `NEXT_PUBLIC_BASE_PATH=/hai-demo-sterling-steak-park-city npm test && npm run test:e2e` to check the Pages build.
 
 ## Deploy

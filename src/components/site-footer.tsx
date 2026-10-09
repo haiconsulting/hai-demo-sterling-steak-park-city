@@ -5,10 +5,12 @@ import { HoursList } from "./hours";
 import { NAV } from "./site-header";
 import { Tbc } from "./placeholder";
 import { ReserveButton, OrderButton } from "./cta";
+import { IS_DEMO } from "@/lib/meta";
+import { cn } from "@/lib/utils";
 
 export function SiteFooter() {
   return (
-    <footer className="grain border-t border-st-cream/10 bg-st-char pb-28 md:pb-0">
+    <footer className={cn("grain border-t border-st-cream/10 bg-st-char", IS_DEMO ? "pb-40 md:pb-24" : "pb-20 md:pb-0")}>
       <div className="container-st grid gap-12 py-16 md:grid-cols-[1.2fr_1fr_1fr] md:py-20">
         <div>
           {/* eslint-disable-next-line @next/next/no-img-element */}

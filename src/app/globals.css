@@ -157,9 +157,50 @@ html[data-foh-ribbon="off"] [data-demo-ribbon] {
   display: none;
 }
 
+/*
+ * Pitch button nudge: rests for ~3.4s, then over the last 600ms of each 4s
+ * cycle scales to 1.12 and wobbles about 3.5deg. Transform only, so no layout
+ * shift. Paused while the pill is hovered or focused; off for reduced motion.
+ */
+@keyframes foh-nudge {
+  0%,
+  85%,
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+  87.5% {
+    transform: scale(1.12) rotate(-3.5deg);
+  }
+  90.5% {
+    transform: scale(1.12) rotate(3.5deg);
+  }
+  93.5% {
+    transform: scale(1.1) rotate(-2.5deg);
+  }
+  96.5% {
+    transform: scale(1.05) rotate(1.5deg);
+  }
+}
+
+.foh-nudge {
+  transform-origin: center;
+  animation: foh-nudge 4s ease-in-out 2s infinite;
+}
+
+.foh-nudge:hover,
+.foh-nudge:focus,
+.foh-nudge:focus-visible,
+[data-demo-ribbon]:hover .foh-nudge,
+[data-demo-ribbon]:focus-within .foh-nudge {
+  animation-play-state: paused;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+  .foh-nudge {
+    animation: none;
   }
   *,
   *::before,
