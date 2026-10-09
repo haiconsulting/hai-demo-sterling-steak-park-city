@@ -2,7 +2,9 @@ import { readFileSync } from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 
-const css = readFileSync(path.resolve("src/app/globals.css"), "utf8");
+// The pill's CSS lives in its self-contained component file (template literal `css`).
+const source = readFileSync(path.resolve("src/components/foh/demo-pill.tsx"), "utf8");
+const css = source.slice(source.indexOf("const css = `") + 13, source.indexOf("`;", source.indexOf("const css = `")));
 
 function block(selectorOrAt: string, from = css): string {
   const start = from.indexOf(selectorOrAt);
@@ -26,22 +28,26 @@ describe("pitch button nudge animation", () => {
   });
 
   it("runs every 4s, forever, with the motion in the last ~600ms", () => {
-    expect(css).toMatch(/\.foh-nudge\s*\{[^}]*animation:\s*foh-nudge\s+4s\b[^;]*infinite/);
+    expect(css).toMatch(/\.foh-nudge\s*\{[^}]*animation:\s*foh-nudge\s+4s\b[^;}]*infinite/);
     const kf = block("@keyframes foh-nudge");
     expect(kf).toMatch(/0%,\s*85%,\s*100%\s*\{\s*transform:\s*scale\(1\)\s*rotate\(0deg\)/);
   });
 
   it("pauses on hover and focus", () => {
-    const paused = css.slice(0, css.indexOf("animation-play-state: paused"));
+    const paused = css.slice(0, css.search(/animation-play-state:\s*paused/));
     const selectors = paused.slice(paused.lastIndexOf("}") + 1);
     expect(selectors).toContain(".foh-nudge:hover");
     expect(selectors).toContain(".foh-nudge:focus-visible");
-    expect(selectors).toContain("[data-demo-ribbon]:focus-within .foh-nudge");
+    expect(selectors).toContain(".foh-pill:focus-within .foh-nudge");
   });
 
   it("is switched off under prefers-reduced-motion", () => {
-    const rm = block("@media (prefers-reduced-motion: reduce)");
+    const rm = block("@media (prefers-reduced-motion:reduce)");
     expect(rm).toMatch(/\.foh-nudge\s*\{\s*animation:\s*none;?\s*\}/);
-    expect(css.lastIndexOf("@media (prefers-reduced-motion: reduce)")).toBeGreaterThan(css.indexOf(".foh-nudge {"));
+    expect(css.lastIndexOf("@media (prefers-reduced-motion:reduce)")).toBeGreaterThan(css.indexOf(".foh-nudge{"));
+  });
+
+  it("gives every pill state the nudge on its Pitch control", () => {
+    expect(source.match(/data-pitch-cta[^>]*foh-nudge/g)).toHaveLength(2);
   });
 });
