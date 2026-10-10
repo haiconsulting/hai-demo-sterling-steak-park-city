@@ -2,9 +2,9 @@
  * The one source of truth for Sterling's facts. Every page, the JSON-LD, the
  * footer and llms.txt read from here, so a fact is changed in one place.
  *
- * Facts come from the FOH prospect one-pager (public research, Oct 9 2026).
- * Anything marked `confirmed: false` is unverified and renders with a visible
- * "to confirm" marker until the owners sign off.
+ * Facts come from the FOH prospect one-pager (public research, Oct 9 2026),
+ * plus hours from the current site and OpenTable. Items the owners still need
+ * to sign off on are listed on /pitch, not flagged on the restaurant pages.
  */
 
 export type DayCode = "Mo" | "Tu" | "We" | "Th" | "Fr" | "Sa" | "Su";
@@ -52,8 +52,8 @@ export const site = {
     instagram: "https://www.instagram.com/sterlingsteakandlounge",
     facebook: "https://facebook.com/111664914620012",
     currentSite: "https://sterlingsteakandlounge.com/",
-    /** No gift card URL found in research. */
-    giftCards: null as string | null,
+    /** SpotOn eGift cards, linked as "Purchase gift cards" from their SpotOn ordering page. */
+    giftCards: "https://egiftcards.spoton.com/5847/614cf0679adef34932e1ca44",
   },
 
   owners: [
@@ -77,20 +77,22 @@ export const site = {
 
   /**
    * THE hours. One record, used everywhere.
-   * The current site says daily 4 to 10 pm, its Events page says 11 am to
-   * 10 pm, and 2021/22 press mentions tapas to midnight. 4 to 10 pm is shown
-   * until the owners confirm.
+   * Daily 4 to 10 pm matches the current site's main hours and OpenTable;
+   * Sunday brunch 10 am to 2 pm is from OpenTable. The current site's Events
+   * page and 2021/22 press list other times, so /pitch asks the owners to
+   * sign off before launch (no chip on the restaurant pages).
    */
   hours: {
-    confirmed: false,
-    note: "Hours shown are from the current website. Its Events page and older press list different times, so these need owner sign-off.",
+    confirmed: true,
+    source: "Current website and OpenTable, Oct 2026",
+    note: "Daily 4 to 10 pm and Sunday brunch 10 am to 2 pm, from the current site and OpenTable. Their Events page and older press list other times.",
     regular: [{ days: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"] as DayCode[], opens: "16:00", closes: "22:00" }],
     brunch: {
       day: "Su" as DayCode,
-      opens: null as string | null,
-      closes: null as string | null,
-      confirmed: false,
-      note: "Sunday brunch is praised in press and reviews but missing from the current site. Times to confirm.",
+      opens: "10:00" as string | null,
+      closes: "14:00" as string | null,
+      confirmed: true,
+      note: "Sunday brunch hours as listed on OpenTable. The current site does not list brunch.",
     },
     happyHour: {
       days: ["Su", "Mo", "Tu", "We", "Th"] as DayCode[],

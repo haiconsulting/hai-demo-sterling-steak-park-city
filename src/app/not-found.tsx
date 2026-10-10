@@ -7,7 +7,7 @@ import { ReserveButton } from "@/components/cta";
 export default function NotFound() {
   return (
     <div>
-      <SiteHeader />
+      <SiteHeader lazyLogo />
       <main id="main" className="stage-glow grain">
         <div className="container-st py-28 text-center md:py-40">
           <p className="kicker-st">404</p>

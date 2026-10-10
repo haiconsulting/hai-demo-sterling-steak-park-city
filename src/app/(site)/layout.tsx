@@ -12,7 +12,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
       <main id="main">{children}</main>
       <SiteFooter />
       <MobileActionBar />
-      {IS_DEMO && <DemoPill />}
+      {IS_DEMO && <DemoPill desktopPosition="right" mobileBarHeight="62px" spacerColor="#231F1C" />}
     </div>
   );
 }

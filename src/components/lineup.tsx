@@ -32,7 +32,7 @@ export function SampleBadge({ className }: { className?: string }) {
   return (
     <span
       title="Sample lineup for the demo. Edit src/data/lineup.ts"
-      className={cn("rounded-sm border border-dashed border-st-gold/60 px-1.5 py-0.5 font-sans text-[0.62rem] font-semibold tracking-wider text-st-gold-light uppercase", className)}
+      className={cn("font-sans text-[0.62rem] font-medium tracking-wide text-st-mute/80 normal-case", className)}
     >
       Sample lineup
     </span>

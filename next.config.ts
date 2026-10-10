@@ -13,6 +13,9 @@ const nextConfig: NextConfig = {
   env: { NEXT_PUBLIC_RESOLVED_SITE_URL: resolveSiteUrl(process.env) },
   poweredByHeader: false,
   reactStrictMode: true,
+  // Builds take seconds. A warm build cache once served stale CSS when the base
+  // path changed between builds, and Vercel restores build caches between deploys.
+  experimental: { turbopackFileSystemCacheForBuild: false },
   turbopack: {
     rules: {
       "*.css": { loaders: ["@tailwindcss/turbopack"], as: "*.css" },

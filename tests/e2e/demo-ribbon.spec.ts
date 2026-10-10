@@ -1,7 +1,6 @@
 import { expect, test, type Page } from "@playwright/test";
 
 const WIDTHS = [320, 360, 375, 390, 414, 430];
-const BASE_FONT_PX = 0.78 * 16; // the pill's original size, before the 1.4x bump
 
 type Box = { top: number; bottom: number; left: number; right: number; width: number; height: number };
 
@@ -39,7 +38,7 @@ for (const width of WIDTHS) {
   test.describe(`demo pill at ${width}px`, () => {
     test.use({ viewport: { width, height: 844 }, isMobile: true, hasTouch: true });
 
-    test("says 'Demo concept / Front of House', is bigger, has 48px targets, fits, and clears the action bar", async ({ page }) => {
+    test("is a slim full-width strip sitting directly on the Reserve/Order/Call bar, with 48px targets", async ({ page }) => {
       await page.goto("", { waitUntil: "networkidle" });
       const pill = page.getByRole("complementary", { name: "Demo concept by Front of House", exact: true });
       await expect(pill).toBeVisible();
@@ -48,17 +47,18 @@ for (const width of WIDTHS) {
       await expect(pill).not.toContainText("HAI");
       const m = await measure(page);
       expect(m.state).toBe("full");
-      expect(m.fontPx).toBeGreaterThanOrEqual(width < 360 ? 16 : BASE_FONT_PX * 1.35);
+      expect(m.fontPx).toBeGreaterThanOrEqual(15);
+      // One slim row, edge to edge, stacked on the bar with no gap: two fixed layers, not three.
+      expect(m.pill.height).toBeLessThanOrEqual(58);
+      expect(Math.round(m.pill.left)).toBe(0);
+      expect(Math.round(m.pill.right)).toBe(m.vw);
+      expect(m.bar).not.toBeNull();
+      expect(Math.abs(m.pill.bottom - m.bar!.top)).toBeLessThanOrEqual(1);
       for (const t of [m.pitch, m.toggle]) {
         expect(t.width).toBeGreaterThanOrEqual(48);
         expect(t.height).toBeGreaterThanOrEqual(48);
+        expect(t.right).toBeLessThanOrEqual(m.vw);
       }
-      expect(m.pill.left).toBeGreaterThanOrEqual(0);
-      expect(m.pill.right).toBeLessThanOrEqual(m.vw);
-      expect(m.pitch.right).toBeLessThanOrEqual(m.pill.right);
-      expect(m.toggle.right).toBeLessThanOrEqual(m.pill.right);
-      expect(m.bar).not.toBeNull();
-      expect(m.pill.bottom).toBeLessThanOrEqual(m.bar!.top - 4);
     });
 
     test("minimized tab shows the mark, 'FOH Demo' and the Pitch arrow, with 48px targets above the action bar", async ({ page }) => {
@@ -72,9 +72,9 @@ for (const width of WIDTHS) {
       await expect(tab.getByRole("link", { name: "See the pitch" })).toBeVisible();
       const m = await measure(page);
       expect(m.state).toBe("tab");
-      expect(m.pill.width).toBeLessThan(before.pill.width);
-      expect(Math.round(m.pill.left)).toBe(Math.round(before.pill.left));
-      expect(Math.round(m.pill.bottom)).toBe(Math.round(before.pill.bottom));
+      expect(m.pill.width).toBeLessThan(before.pill.width * 0.75);
+      expect(m.pill.left).toBeGreaterThanOrEqual(0);
+      expect(m.pill.left).toBeLessThanOrEqual(16);
       for (const t of [m.pitch, m.toggle]) {
         expect(t.width).toBeGreaterThanOrEqual(48);
         expect(t.height).toBeGreaterThanOrEqual(48);
@@ -111,18 +111,32 @@ for (const width of WIDTHS) {
 test.describe("demo pill on desktop", () => {
   test.use({ viewport: { width: 1440, height: 900 } });
 
-  test("reads 'Demo concept by Front of House' at ~1.4x and leaves the footer readable", async ({ page }) => {
+  test("is compact, sits bottom-right, and leaves the footer readable", async ({ page }) => {
     await page.goto("", { waitUntil: "networkidle" });
     await expect(page.getByRole("complementary", { name: "Demo concept by Front of House", exact: true })).toContainText(
       "Demo concept by Front of House",
     );
     const m = await measure(page);
-    expect(m.fontPx).toBeGreaterThanOrEqual(BASE_FONT_PX * 1.35);
-    expect(m.pitch.height).toBeGreaterThanOrEqual(48);
+    expect(m.pill.width).toBeLessThanOrEqual(520);
+    expect(m.pill.height).toBeLessThanOrEqual(52);
+    expect(m.vw - m.pill.right).toBeGreaterThanOrEqual(16);
+    expect(m.vw - m.pill.right).toBeLessThanOrEqual(24);
+    expect(m.pill.left).toBeGreaterThan(m.vw / 2);
+    expect(m.pitch.height).toBeGreaterThanOrEqual(40);
     await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
     await page.waitForTimeout(150);
     const after = await measure(page);
     for (const p of await page.locator("footer p").all()) expect(overlaps(await p.evaluate(rect), after.pill)).toBe(false);
+  });
+
+  test("minimized tab stays in the same bottom-right corner", async ({ page }) => {
+    await page.goto("", { waitUntil: "networkidle" });
+    const before = await measure(page);
+    await page.getByRole("button", { name: "Minimize demo banner" }).click();
+    const m = await measure(page);
+    expect(m.state).toBe("tab");
+    expect(Math.round(m.pill.right)).toBe(Math.round(before.pill.right));
+    expect(Math.round(m.pill.bottom)).toBe(Math.round(before.pill.bottom));
   });
 });
 

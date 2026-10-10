@@ -136,5 +136,53 @@
       293
     ],
     "alpha": true
+  },
+  "pitch-current-desktop": {
+    "width": 1440,
+    "height": 900,
+    "widths": [
+      720,
+      1200
+    ],
+    "alpha": true
+  },
+  "pitch-demo-desktop": {
+    "width": 1440,
+    "height": 900,
+    "widths": [
+      720,
+      1200
+    ],
+    "alpha": true
+  },
+  "pitch-current-mobile": {
+    "width": 780,
+    "height": 1688,
+    "widths": [
+      260,
+      390,
+      520
+    ],
+    "alpha": true
+  },
+  "pitch-demo-mobile": {
+    "width": 780,
+    "height": 1688,
+    "widths": [
+      260,
+      390,
+      520
+    ],
+    "alpha": true
+  },
+  "logo-shield": {
+    "width": 188,
+    "height": 195,
+    "widths": [
+      56,
+      112,
+      168
+    ],
+    "alpha": true
   }
 }

@@ -46,12 +46,25 @@ export function restaurantNode(): Restaurant {
       { "@type": "LocationFeatureSpecification", name: site.patio, value: true },
       { "@type": "LocationFeatureSpecification", name: "Private events and buyouts", value: true },
     ],
-    openingHoursSpecification: site.hours.regular.map((h) => ({
-      "@type": "OpeningHoursSpecification" as const,
-      dayOfWeek: h.days.map((d) => DAYS.find((x) => x.code === d)!.schema) as never,
-      opens: h.opens,
-      closes: h.closes,
-    })),
+    openingHoursSpecification: [
+      ...site.hours.regular.map((h) => ({
+        "@type": "OpeningHoursSpecification" as const,
+        dayOfWeek: h.days.map((d) => DAYS.find((x) => x.code === d)!.schema) as never,
+        opens: h.opens,
+        closes: h.closes,
+      })),
+      ...(site.hours.brunch.opens && site.hours.brunch.closes
+        ? [
+            {
+              "@type": "OpeningHoursSpecification" as const,
+              name: "Sunday brunch",
+              dayOfWeek: [DAYS.find((x) => x.code === site.hours.brunch.day)!.schema] as never,
+              opens: site.hours.brunch.opens,
+              closes: site.hours.brunch.closes,
+            },
+          ]
+        : []),
+    ],
     sameAs: [site.links.instagram, site.links.facebook],
     potentialAction: [
       {

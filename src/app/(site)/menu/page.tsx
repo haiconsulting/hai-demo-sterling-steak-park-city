@@ -1,7 +1,7 @@
 import { Photo } from "@/components/photo";
 import { ReserveButton, OrderButton } from "@/components/cta";
 import { SectionHead, Accent } from "@/components/section";
-import { PlaceholderNote, Tbc } from "@/components/placeholder";
+import { PlaceholderNote } from "@/components/placeholder";
 import { JsonLd } from "@/components/json-ld";
 import { formatPrice, menu, menuSource } from "@/data/menu";
 import { siteGraph } from "@/lib/jsonld";
@@ -67,7 +67,7 @@ export default function MenuPage() {
                         {item.options.map((o, i) => (
                           <span key={i} className="text-base tabular-nums text-st-cream/90">
                             {o.label && <span className="mr-1.5 text-sm text-st-mute">{o.label}</span>}
-                            {o.price === null ? <Tbc>Price to confirm</Tbc> : formatPrice(o.price)}
+                            {o.price === null ? <span className="text-st-gold-light italic">{formatPrice(o.price)}</span> : formatPrice(o.price)}
                           </span>
                         ))}
                       </div>
@@ -82,7 +82,7 @@ export default function MenuPage() {
           <p className="text-xs leading-relaxed text-st-mute">
             {menuSource.label} (
             <a href={menuSource.url} className="underline underline-offset-2" rel="noopener">source</a>
-            ). Menu and prices change; Sterling to confirm before launch. Items marked &ldquo;Price to confirm&rdquo; show no price on the current menu.
+            ). Menu and prices change.
           </p>
         </div>
 

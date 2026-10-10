@@ -29,7 +29,8 @@ export function Photo({ name, alt, sizes, className, imgClassName, priority }: P
         width={largest}
         height={height}
         loading={priority ? "eager" : "lazy"}
-        decoding="async"
+        fetchPriority={priority ? "high" : undefined}
+        decoding={priority ? "sync" : "async"}
         className={cn("h-full w-full object-cover", imgClassName)}
       />
     </picture>

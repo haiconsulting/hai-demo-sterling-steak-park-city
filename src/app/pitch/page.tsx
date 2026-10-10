@@ -1,7 +1,8 @@
-import Link from "next/link";
+import { IntentLink as Link } from "@/components/intent-link";
 import { Check, X } from "lucide-react";
 import { pageMeta } from "@/lib/meta";
 import { lighthouse } from "@/data/pitch-metrics";
+import { BeforeAfter } from "@/components/foh/before-after";
 
 export const metadata = {
   ...pageMeta({
@@ -11,7 +12,7 @@ export const metadata = {
   }),
 };
 
-const CONTACT_URL = "https://fohrestaurants.com/contact?utm_source=sterling-demo&utm_medium=pitch&restaurant=Sterling%20Steak%20%26%20Lounge";
+const WALKTHROUGH_URL = `mailto:hello@fohrestaurants.com?subject=${encodeURIComponent("15-min walkthrough: Sterling Steak & Lounge demo")}&body=${encodeURIComponent("Hi Drew,\n\nWe'd like a 15-minute walkthrough of the Sterling demo. A few times that work for us:\n\n- \n- \n\nJackson / Lance")}`;
 
 const ROWS: { area: string; now: string; demo: string; href?: string }[] = [
   {
@@ -28,13 +29,13 @@ const ROWS: { area: string; now: string; demo: string; href?: string }[] = [
   {
     area: "The hours",
     now: "Daily 4 to 10 pm on the site, 11 am to 10 pm on the Events page, tapas to midnight in press. Sunday brunch missing.",
-    demo: "One hours record feeds every page, the schema and llms.txt. Sunday brunch has a slot waiting for your times.",
+    demo: "One hours record feeds every page, the schema and llms.txt, with Sunday brunch (10 am to 2 pm, from OpenTable) included.",
     href: "/visit/",
   },
   {
     area: "The menu",
     now: "HTML menu (good), but the Tomahawk, Ribeye and Surf & Turf show no price.",
-    demo: "A full menu page with every published price, the missing ones flagged for you, and Menu schema.",
+    demo: "A full menu page with every published price, the unpriced cuts shown as market price, and Menu schema.",
     href: "/menu/",
   },
   {
@@ -66,11 +67,10 @@ const ROWS: { area: string; now: string; demo: string; href?: string }[] = [
 ];
 
 const NEEDS = [
-  "Confirmed hours, including Sunday brunch",
-  "Prices for the Tomahawk, Ribeye and Surf & Turf",
+  "Sign off on hours: daily 4 to 10 pm, Sunday brunch 10 am to 2 pm*",
+  "Tomahawk, Ribeye and Surf & Turf: set prices or keep \"Market price\"",
   "This month's real lineup and set times",
   "Private room capacity, minimums and event menus",
-  "Gift card link",
   "A source for the \"Rated #1\" award, or we leave it off",
 ];
 
@@ -85,19 +85,20 @@ const btn = "inline-flex items-center justify-center rounded-full px-6 py-3.5 te
 export default function PitchPage() {
   return (
     <>
-      <section className="py-[clamp(3.5rem,8vw,6.5rem)]">
+      <section className="pt-[clamp(2.5rem,4vw,3.5rem)] pb-[clamp(3.5rem,8vw,6.5rem)]">
         <div className={wrap}>
           <Kicker>Prepared for Jackson and Lance Sterling</Kicker>
           <h1 className="mt-5 max-w-4xl font-cormorant text-[clamp(2.6rem,6vw,4.4rem)] leading-[1.08] font-bold tracking-[-0.01em] text-foh-ink">
             Your room is loud. Your website should be <em className="font-semibold text-foh-ember">too</em>.
           </h1>
-          <p className="mt-6 max-w-[56ch] text-[clamp(1.05rem,1.6vw,1.28rem)] leading-[1.65]">
+          <BeforeAfter />
+          <p className="mt-10 max-w-[56ch] text-[clamp(1.05rem,1.6vw,1.28rem)] leading-[1.65]">
             This is a working concept for Sterling Steak &amp; Lounge, built from public research on October 9, 2026. Same photos, same OpenTable,
             same SpotOn. The difference: the music leads, the facts agree with each other, and you own the site.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <a href={CONTACT_URL} className={`${btn} bg-foh-ember-deep text-white hover:bg-[#8f3a22] hover:shadow-[0_10px_22px_rgba(199,91,57,.28)]`}>
-              Start the conversation
+            <a href={WALKTHROUGH_URL} data-walkthrough-cta className={`${btn} bg-foh-ember-deep text-white hover:bg-[#8f3a22] hover:shadow-[0_10px_22px_rgba(199,91,57,.28)]`}>
+              Book a 15-min walkthrough
             </a>
             <Link href="/" className={`${btn} border border-foh-line text-foh-ink hover:border-foh-ink`}>
               Walk the demo
@@ -204,7 +205,10 @@ export default function PitchPage() {
           <div>
             <Kicker>Before launch</Kicker>
             <h2 id="needs-title" className={`${h2} mt-4`}>What we need from <em className="text-foh-ember">you</em>.</h2>
-            <p className="mt-4 leading-[1.65]">Anything unverified in the demo is marked &ldquo;to confirm&rdquo;. Nothing is invented: no prices, reviews or quotes.</p>
+            <p className="mt-4 leading-[1.65]">Nothing is invented: no prices, reviews or quotes. The lineup and a few event details are marked as samples.</p>
+            <p className="mt-3 text-sm leading-relaxed text-foh-body">
+              * Shown from your current site and OpenTable. Your Events page and older press list other times, so we&apos;ll confirm before launch.
+            </p>
           </div>
           <ul className="grid gap-3 self-center sm:grid-cols-2">
             {NEEDS.map((n) => (
@@ -221,7 +225,9 @@ export default function PitchPage() {
           </h2>
           <p className="mx-auto mt-4 max-w-[52ch]">Drew Traldi, Front of House. Built only for restaurants.</p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <a href={CONTACT_URL} className={`${btn} bg-foh-ember-deep text-white hover:bg-[#8f3a22]`}>Start the conversation</a>
+            <a href={WALKTHROUGH_URL} data-walkthrough-cta className={`${btn} bg-foh-ember-deep text-white hover:bg-[#8f3a22]`}>
+              Book a 15-min walkthrough
+            </a>
             <a href="https://fohrestaurants.com/pricing" className={`${btn} bg-foh-paper text-foh-ink hover:bg-white`}>See pricing</a>
           </div>
           <p className="mt-6 text-sm">

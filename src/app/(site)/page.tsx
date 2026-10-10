@@ -32,7 +32,7 @@ export default function Home() {
       {/* HERO */}
       <section className="stage-glow grain relative overflow-hidden">
         <div className="container-st grid items-center gap-12 pt-10 pb-16 md:pt-16 lg:grid-cols-[1.05fr_1fr] lg:gap-16 lg:pt-20 lg:pb-24">
-          <div>
+          <div className="relative z-10">
             <p className="kicker-st">Kimball Junction &middot; Park City, Utah</p>
             <h1 className="h-display mt-5 text-[3.4rem] text-st-cream sm:text-7xl xl:text-[5.6rem]">
               Steaks.
@@ -50,20 +50,23 @@ export default function Home() {
               Jackson and Lance Sterling&apos;s steakhouse and lounge. Live music every night of the week, a house band raised on
               &apos;70s and &apos;80s rock, and a copper bar under walls of collectible guitars.
             </p>
-            <Link href="/music/" className="mt-6 inline-flex items-center gap-2 text-sm text-st-gold-light underline-offset-4 hover:underline">
+            <Link href="/music/" className="mt-4 inline-flex min-h-11 items-center gap-2 text-sm text-st-gold-light underline-offset-4 hover:underline">
               See who&apos;s playing this week <ArrowRight className="size-4" aria-hidden />
             </Link>
           </div>
 
-          <div className="relative mx-auto w-full max-w-md lg:max-w-none">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] border border-st-cream/10 sm:aspect-square lg:aspect-[4/5]">
+          {/* Phones: the photo sits behind the headline so there is imagery above the fold. Desktop: framed beside it. */}
+          <div data-hero-photo className="absolute inset-x-0 top-0 -z-10 h-[31rem] sm:h-[36rem] lg:relative lg:inset-auto lg:z-auto lg:h-auto lg:w-full">
+            <div className="relative h-full overflow-hidden lg:aspect-[4/5] lg:rounded-[2rem] lg:border lg:border-st-cream/10">
               <Photo
-                name="lounge"
-                sizes="(min-width: 1024px) 560px, (min-width: 640px) 448px, 92vw"
-                alt="Guests at their tables in the Sterling lounge while a performer is on stage"
+                name="ribeye"
+                priority
+                sizes="(min-width: 1024px) 560px, 100vw"
+                alt="Grilled ribeye with herb butter at Sterling, a glass of red wine beside it"
                 className="block h-full"
+                imgClassName="object-[62%_50%]"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-st-black via-st-black/10 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-b from-st-black/45 via-st-black/70 to-st-black lg:bg-gradient-to-t lg:from-st-black/80 lg:via-transparent lg:to-transparent" />
             </div>
             <TonightCard className="absolute -bottom-8 -left-10 hidden w-[22rem] lg:block" />
           </div>
@@ -94,7 +97,7 @@ export default function Home() {
                 The lineup lives in one file, so it changes as fast as the bookings do.
               </p>
             </div>
-            <Link href="/music/" className="inline-flex items-center gap-2 font-display text-sm tracking-[0.2em] text-st-gold-light uppercase hover:text-st-cream">
+            <Link href="/music/" className="inline-flex min-h-11 items-center gap-2 font-display text-sm tracking-[0.2em] text-st-gold-light uppercase hover:text-st-cream">
               Full lineup <ArrowRight className="size-4" aria-hidden />
             </Link>
           </div>
@@ -161,7 +164,7 @@ export default function Home() {
           </div>
           <div className="relative">
             <div className="aspect-[3/2] overflow-hidden rounded-[2rem]">
-              <Photo name="ribeye" sizes="(min-width: 1024px) 600px, 92vw" alt="Grilled ribeye with herb butter, a glass of red wine beside it" className="block h-full" />
+              <Photo name="plates" sizes="(min-width: 1024px) 600px, 92vw" alt="Four Sterling plates: steak, prime rib, seared tuna and seafood" className="block h-full bg-st-char" imgClassName="object-contain" />
             </div>
             <div className="absolute -bottom-8 -left-4 hidden w-44 overflow-hidden rounded-2xl border-4 border-st-black sm:block md:w-52">
               <Photo name="tuna" sizes="208px" alt="Seared tuna plated with sauce on a long white dish" className="block aspect-square" />

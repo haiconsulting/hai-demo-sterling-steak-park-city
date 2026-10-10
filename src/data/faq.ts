@@ -11,7 +11,7 @@ export const faq: { q: string; a: string }[] = [
   },
   {
     q: "What are the hours?",
-    a: `Daily ${formatTime(reg.opens)} to ${formatTime(reg.closes)}. Sunday brunch times are being confirmed.`,
+    a: `Daily ${formatTime(reg.opens)} to ${formatTime(reg.closes)}. Sunday brunch ${formatTime(site.hours.brunch.opens!)} to ${formatTime(site.hours.brunch.closes!)}.`,
   },
   {
     q: "Is there live music?",

@@ -70,12 +70,12 @@ export default function VisitPage() {
           <h2 id="faq-title" className="h-display mt-4 text-4xl text-st-cream sm:text-5xl">Questions, <Accent>answered.</Accent></h2>
           <div className="mt-10 divide-y divide-st-cream/10 border-y border-st-cream/10">
             {faq.map((f) => (
-              <details key={f.q} className="group py-5">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-6 font-display text-lg tracking-wide text-st-cream uppercase [&::-webkit-details-marker]:hidden">
+              <details key={f.q} className="group py-2">
+                <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-6 py-2 font-display text-lg tracking-wide text-st-cream uppercase [&::-webkit-details-marker]:hidden">
                   {f.q}
                   <span className="text-2xl text-st-gold transition-transform group-open:rotate-45" aria-hidden>+</span>
                 </summary>
-                <p className="mt-3 leading-relaxed text-st-mute">{f.a}</p>
+                <p className="mt-1 pb-3 leading-relaxed text-st-mute">{f.a}</p>
               </details>
             ))}
           </div>

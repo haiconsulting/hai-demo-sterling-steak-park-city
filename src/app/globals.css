@@ -152,6 +152,13 @@
   }
 }
 
+/* The pitch page is light: match html/body so no dark band shows during route changes or iOS overscroll. */
+html:has([data-foh-pitch]),
+html:has([data-foh-pitch]) body {
+  background-color: #fbf7f0;
+  color-scheme: light;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

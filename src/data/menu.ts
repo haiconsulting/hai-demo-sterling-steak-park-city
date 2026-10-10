@@ -1,8 +1,9 @@
 /**
  * Menu items and prices as published on Sterling's current food menu
- * (captured Oct 9 2026). `price: null` means the current menu shows no price,
- * and the page renders a "Price to confirm" placeholder. Never fill a price
- * in without the owners' confirmation.
+ * (captured Oct 9 2026). `price: null` means the current menu shows no price;
+ * the page shows "Market price", as steakhouses do for cuts like these, and
+ * the Menu schema leaves the price out. Never fill a price in without the
+ * owners' confirmation.
  */
 
 export type MenuOption = { label?: string; price: number | null };
@@ -72,12 +73,11 @@ export const menu: MenuSection[] = [
   {
     id: "brunch",
     title: "Sunday brunch",
-    blurb: "One guest review calls it \"the real best kept secret.\" It deserves its own page.",
+    blurb: "Sundays, 10 am to 2 pm. One guest review calls it \"the real best kept secret.\"",
     items: [],
-    placeholder: "Brunch menu, prices and hours to be supplied by Sterling.",
   },
 ];
 
 export function formatPrice(p: number | null): string {
-  return p === null ? "Price to confirm" : `$${p}`;
+  return p === null ? "Market price" : `$${p}`;
 }

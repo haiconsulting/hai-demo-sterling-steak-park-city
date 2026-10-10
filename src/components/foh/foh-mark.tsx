@@ -2,7 +2,8 @@
  * Front of House awning mark: 9 bays alternating Ember and Ink (Ember at both
  * ends) under an Ember rail. Never recolor outside Ink and Ember.
  */
-export function FohMark({ className, title = "Front of House" }: { className?: string; title?: string }) {
+/** Pass `title` for the alt text (default "Front of House awning logo"). */
+export function FohMark({ className, title = "Front of House awning logo" }: { className?: string; title?: string }) {
   const bays = 9;
   const topL = 24, topR = 216, botL = 8, botR = 232, top = 18, bottom = 64;
   const polys = Array.from({ length: bays }, (_, i) => {
@@ -20,6 +21,7 @@ export function FohMark({ className, title = "Front of House" }: { className?: s
   });
   return (
     <svg viewBox="0 0 240 100" role="img" aria-label={title} className={className}>
+      <title>{title}</title>
       <rect x="24" y="7" width="192" height="11" rx="3" fill="#C75B39" />
       {polys.map((p) => (
         <path key={p.key} d={p.d} fill={p.fill} stroke="#FBF7F0" strokeWidth="1.6" strokeLinejoin="round" />

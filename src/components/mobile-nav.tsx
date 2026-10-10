@@ -27,7 +27,7 @@ export function MobileNav({ items }: { items: { href: string; label: string }[] 
         aria-controls="mobile-menu"
         aria-label={open ? "Close menu" : "Open menu"}
         onClick={() => setOpen((v) => !v)}
-        className="grid size-10 place-items-center rounded-full border border-st-cream/20 text-st-cream"
+        className="grid size-11 place-items-center rounded-full border border-st-cream/20 text-st-cream"
       >
         {open ? <X className="size-5" /> : <Menu className="size-5" />}
       </button>

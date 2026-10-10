@@ -1,6 +1,9 @@
-import Link from "next/link";
+import type { Viewport } from "next";
 import { Cormorant, Inter } from "next/font/google";
 import { FohMark } from "@/components/foh/foh-mark";
+import { DemoPill } from "@/components/foh/demo-pill";
+import { IntentLink } from "@/components/intent-link";
+import { IS_DEMO } from "@/lib/meta";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 
@@ -12,21 +15,25 @@ const cormorant = Cormorant({
   display: "swap",
 });
 
+export const viewport: Viewport = { themeColor: "#FBF7F0", colorScheme: "light" };
+
 export default function PitchLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className={`${cormorant.variable} ${inter.variable} min-h-dvh font-sans bg-foh-paper text-foh-body [color-scheme:light]`}>
+    <div data-foh-pitch className={`${cormorant.variable} ${inter.variable} min-h-dvh font-sans bg-foh-paper text-foh-body [color-scheme:light]`}>
       <header className="border-b border-foh-line bg-foh-paper/90 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-[1140px] items-center justify-between gap-4 px-[clamp(1.25rem,4vw,3rem)]">
-          <a href="https://fohrestaurants.com" className="flex items-center gap-3" aria-label="FOH, Front of House by HAI Consulting">
-            <FohMark className="h-7 w-auto" title="" />
+          <a href="https://fohrestaurants.com" className="flex min-h-11 items-center gap-3">
+            <FohMark className="h-7 w-auto" />
             <span className="flex flex-col leading-none">
-              <span className="font-cormorant text-2xl font-semibold text-foh-ink">FOH</span>
+              <span className="font-cormorant text-2xl font-semibold text-foh-ink">FOH</span>{" "}
               <span className="mt-0.5 text-[0.58rem] font-semibold tracking-[0.3em] text-foh-body uppercase">Front of House</span>
+              <span className="sr-only"> by HAI Consulting</span>
             </span>
           </a>
-          <Link href="/" className="rounded-full border border-foh-line px-4 py-2 text-sm font-semibold text-foh-ink transition-colors hover:border-foh-ink">
-            View the Sterling demo
-          </Link>
+          <IntentLink href="/" className="inline-flex min-h-11 shrink-0 items-center whitespace-nowrap rounded-full border border-foh-line px-4 text-sm font-semibold text-foh-ink transition-colors hover:border-foh-ink">
+            <span className="sm:hidden">View demo</span>
+            <span className="hidden sm:inline">View the Sterling demo</span>
+          </IntentLink>
         </div>
       </header>
       <main id="main">{children}</main>
@@ -42,6 +49,7 @@ export default function PitchLayout({ children }: { children: React.ReactNode })
           </p>
         </div>
       </footer>
+      {IS_DEMO && <DemoPill desktopPosition="right" spacerColor="#221C18" />}
     </div>
   );
 }

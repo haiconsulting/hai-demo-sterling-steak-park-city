@@ -90,9 +90,26 @@ npm run lint && npm run typecheck
 
 ### The demo pill
 
-`src/components/foh/demo-pill.tsx` is self-contained (markup, CSS, awning mark, icons, and the pre-paint state script), so it can be copied into another Next.js demo and rendered once with `<DemoPill />` (optional `pitchHref`). It is a server component: the minimize and expand clicks are handled by a delegated listener in its inline script, and the state lives in `localStorage["foh-demo-pill"]` (`"min"` or `"open"`), applied as `<html data-foh-pill="min">` before paint.
+`src/components/foh/demo-pill.tsx` is self-contained (markup, CSS, awning mark, icons and state handling), so it can be copied into another Next.js App Router demo and rendered once per layout:
 
-Run with `NEXT_PUBLIC_BASE_PATH=/hai-demo-sterling-steak-park-city npm test && npm run test:e2e` to check the Pages build.
+```tsx
+<DemoPill
+  pitchHref="/pitch/"        // on this route the CTA becomes "Back to demo" (no nudge)
+  demoHref="/"               // where "Back to demo" goes
+  desktopPosition="right"    // "left" (default) or "right", 768px and up
+  mobileBarHeight="62px"     // the host's fixed bottom bar on phones, if any
+  spacerColor="#231F1C"      // color of the in-flow spacer (match the footer)
+/>
+```
+
+- Phones: a slim full-width strip sitting directly on the host's bottom bar (or the viewport bottom), so there are never three stacked layers of fixed UI. An in-flow spacer at the end of the page reserves its height, so it never hides the last content. Minimized, it is a small "FOH Demo" chip in the same corner.
+- Desktop: a compact pill (about 460 by 50px) in the chosen bottom corner, with its own spacer.
+- Links to the other route (pitch to demo and back) prefetch on hover, focus or touch instead of on load. Viewport prefetch would preload the other route's fonts and CSS, which browsers flag as "preloaded but not used".
+- Minimize and expand are React `onClick` handlers on real `<button>`s (48px, `touch-action: manipulation`), with state read through `useSyncExternalStore` from `<html data-foh-pill="min">` and saved in `localStorage["foh-demo-pill"]` (`"min"` or `"open"`).
+- On a full page load, a tiny script written into the server HTML only (`useServerInsertedHTML`) applies the saved state before first paint and handles taps that land before hydration. When the pill mounts on the client (client-side navigation), a layout effect applies the saved state before paint.
+- Do not move the toggle back into an inline `<script>` in the component: React never executes scripts it renders on the client, which is what broke minimizing on the live site after navigating from `/pitch/` to the demo.
+
+`tests/e2e/pill-touch.spec.ts` covers this with touch taps on a 390x844 iPhone viewport, in Chromium and (when installed) WebKit with the iPhone 14 profile: tap minimize, the tab shows, tap the tab, it expands, reload; plus client-side navigation, pre-hydration taps, no flash on reload, and unobstructed 48px targets.
 
 ## Deploy
 
@@ -128,9 +145,13 @@ Measured Oct 9 2026 with Lighthouse 12 (default simulated mobile) against the Pa
 | `/music/` | 96 | 100 | 100 | 66 (noindex) |
 | `/private-events/` | 97 | 100 | 100 | 66 (noindex) |
 | `/visit/` | 97 | 100 | 100 | 66 (noindex) |
-| `/pitch/` | 96 | 100 | 100 | 63 (noindex) |
+| `/pitch/` | 94 | 100 | 100 | 66 (noindex) |
 
-The only SEO deduction is the intentional `noindex`.
+The only SEO deduction is the intentional `noindex`. `/pitch/` dropped from 96 to 94 with the before/after captures and the demo pill; the rest of the cost is the FOH brand fonts (Cormorant and Inter).
+
+### Before/after captures on /pitch
+
+`node scripts/capture-current-site.mjs` captures sterlingsteakandlounge.com above the fold (1440x900 and an iPhone 390x844) into `assets-src/pitch/`; `node scripts/capture-demo-site.mjs <baseUrl>` does the same for this demo (serve `out/` first). Then run `npm run images`.
 
 ## Other scripts
 

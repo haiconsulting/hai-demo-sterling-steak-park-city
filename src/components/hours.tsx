@@ -1,5 +1,4 @@
 import { DAYS, formatDayRange, formatTime, site } from "@/data/site";
-import { Tbc } from "./placeholder";
 import { cn } from "@/lib/utils";
 
 /** Renders THE hours from src/data/site.ts. Used by every page that shows hours. */
@@ -13,7 +12,6 @@ export function HoursList({ className, compact = false }: { className?: string; 
         <div key={h.days.join()} className="flex items-baseline justify-between gap-4">
           <dt className="text-st-cream">
             {formatDayRange(h.days)}
-            {!hours.confirmed && <Tbc className="ml-2" title={hours.note} />}
           </dt>
           <dd className="tabular-nums text-st-cream/85">
             {formatTime(h.opens)} to {formatTime(h.closes)}
@@ -26,7 +24,7 @@ export function HoursList({ className, compact = false }: { className?: string; 
           {hours.brunch.opens && hours.brunch.closes ? (
             `${formatTime(hours.brunch.opens)} to ${formatTime(hours.brunch.closes)}`
           ) : (
-            <Tbc title={hours.brunch.note}>Times to confirm</Tbc>
+            "Hours vary"
           )}
         </dd>
       </div>
